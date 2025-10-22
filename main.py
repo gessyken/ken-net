@@ -5,6 +5,20 @@ args = sys.argv
 # Verfication de l'existance d'un nom de projet
 if(len(args) > 1):
     project_name = args[1]
+    # Verification de l'option --help
+    if project_name == "--help":
+        print(colorama.Fore.LIGHTBLUE_EX + "\n KEN-NET - Générateur de projets web" + colorama.Style.RESET_ALL)
+        print(colorama.Fore.LIGHTGREEN_EX + "\n Usage: python3 main.py <NOM_PROJET> [options]" + colorama.Style.RESET_ALL)
+        print(colorama.Fore.LIGHTYELLOW_EX + "\n Options disponibles:" + colorama.Style.RESET_ALL)
+        print("  --git     : Initialiser un depot Git")
+        print("  --serve   : Lancer un serveur de developpement")
+        print("  --path    : Choisir le dossier de destination")
+        print(colorama.Fore.LIGHTYELLOW_EX + "\n Exemples:" + colorama.Style.RESET_ALL)
+        print("  python3 main.py mon-site")
+        print("  python3 main.py mon-site --git")
+        print("  python3 main.py mon-site --serve")
+        print("  python3 main.py mon-site --path /tmp")
+        exit()
 else:
     print(colorama.Fore.RED + " \n Veuillez entrer un nom de projet \n" + colorama.Style.RESET_ALL)
     exit()
@@ -82,5 +96,9 @@ if(len(args) > 3):
         print(colorama.Fore.LIGHTGREEN_EX + "Le serveur de developpement est lance sur l'adresse http://127.0.0.1:8000 " + colorama.Style.RESET_ALL)
         start_server(project_name, custom_path)
 
+# Message de fin utile
+project_path = os.path.join(get_desktop_path(custom_path), project_name)
+print(colorama.Fore.LIGHTGREEN_EX + f"\n Projet cree avec succes dans {project_path}" + colorama.Style.RESET_ALL)
+print(colorama.Fore.LIGHTBLUE_EX + f" Pour le voir : cd {project_path} && python3 -m http.server 8000" + colorama.Style.RESET_ALL)
 
 exit()

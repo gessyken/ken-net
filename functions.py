@@ -9,47 +9,49 @@ contenu_css = " // Ici votre css personalise  "
 contenu_js = " // Ici votre Javascript personalise "
 
 # Fonction pour obtenir le chemin du bureau sur tous les OS
-def get_desktop_path():
+def get_desktop_path(custom_path=None):
+    if custom_path:
+        return custom_path
     return os.path.join(os.path.expanduser("~"), "Desktop")
 
 # Creation des dossiers (structure d'un projet KEN-NET)
 
-def create_project_main_folder(project_name, barre):
+def create_project_main_folder(project_name, barre, custom_path=None):
     barre.set_description("Creation du project ...")
     try:
-        project_path = os.path.join(get_desktop_path(), project_name)
+        project_path = os.path.join(get_desktop_path(custom_path), project_name)
         os.makedirs(project_path, exist_ok=True)
     except Exception as e:
         print(f"Erreur lors de la creation du projet: {e}")
 
-def create_assets_folder(project_name, barre):
+def create_assets_folder(project_name, barre, custom_path=None):
     barre.set_description("Creation du dossier assets ...")
     try:
-        assets_path = os.path.join(get_desktop_path(), project_name, "assets")
+        assets_path = os.path.join(get_desktop_path(custom_path), project_name, "assets")
         os.makedirs(assets_path, exist_ok=True)
     except Exception as e:
         print(f"Erreur lors de la creation du dossier assets: {e}")
 
-def create_medias_folder(project_name, barre):
+def create_medias_folder(project_name, barre, custom_path=None):
     barre.set_description("Creation du dossier medias ...")
     try:
-        medias_path = os.path.join(get_desktop_path(), project_name, "medias")
+        medias_path = os.path.join(get_desktop_path(custom_path), project_name, "medias")
         os.makedirs(medias_path, exist_ok=True)
     except Exception as e:
         print(f"Erreur lors de la creation du dossier medias: {e}")
 
-def create_css_folder(project_name, barre):
+def create_css_folder(project_name, barre, custom_path=None):
     barre.set_description("Creation du dossier css ...")
     try:
-        css_path = os.path.join(get_desktop_path(), project_name, "assets", "css")
+        css_path = os.path.join(get_desktop_path(custom_path), project_name, "assets", "css")
         os.makedirs(css_path, exist_ok=True)
     except Exception as e:
         print(f"Erreur lors de la creation du dossier css: {e}")
 
-def create_js_folder(project_name, barre):
+def create_js_folder(project_name, barre, custom_path=None):
     barre.set_description("Creation du dossier js ...")
     try:
-        js_path = os.path.join(get_desktop_path(), project_name, "assets", "js")
+        js_path = os.path.join(get_desktop_path(custom_path), project_name, "assets", "js")
         os.makedirs(js_path, exist_ok=True)
     except Exception as e:
         print(f"Erreur lors de la creation du dossier js: {e}")
@@ -57,75 +59,75 @@ def create_js_folder(project_name, barre):
 
 # Creation des fichiers du projet
 
-def create_index_html_file(project_name, barre):
+def create_index_html_file(project_name, barre, custom_path=None):
     barre.set_description("Creation du fichier index.html ...")
     try:
-        project_path = os.path.join(get_desktop_path(), project_name)
+        project_path = os.path.join(get_desktop_path(custom_path), project_name)
         shutil.copy("index.html", project_path)
     except Exception as e:
         print(f"Erreur lors de la creation du fichier index.html: {e}")
     
-def create_style_css_file(project_name, barre):
+def create_style_css_file(project_name, barre, custom_path=None):
     barre.set_description("Creation du fichier style.css ...")
     try:
-        css_file_path = os.path.join(get_desktop_path(), project_name, "assets", "css", "style.css")
+        css_file_path = os.path.join(get_desktop_path(custom_path), project_name, "assets", "css", "style.css")
         with open(css_file_path, 'w') as f:
             f.write(contenu_css)
     except Exception as e:
         print(f"Erreur lors de la creation du fichier style.css: {e}")
 
-def create_main_js_file(project_name, barre):
+def create_main_js_file(project_name, barre, custom_path=None):
     barre.set_description("Creation du fichier main.js ...")
     try:
-        js_file_path = os.path.join(get_desktop_path(), project_name, "assets", "js", "main.js")
+        js_file_path = os.path.join(get_desktop_path(custom_path), project_name, "assets", "js", "main.js")
         with open(js_file_path, 'w') as f:
             f.write(contenu_js)
     except Exception as e:
         print(f"Erreur lors de la creation du fichier main.js: {e}")
 
-def create_bootstrap_css_file(project_name, barre):
+def create_bootstrap_css_file(project_name, barre, custom_path=None):
     barre.set_description("Insertion de bootstrap css ...")
     try:
-        css_dest_path = os.path.join(get_desktop_path(), project_name, "assets", "css")
+        css_dest_path = os.path.join(get_desktop_path(custom_path), project_name, "assets", "css")
         shutil.copy("assets/css/bootstrap.min.css", css_dest_path)
     except Exception as e:
         print(f"Erreur lors de la copie de bootstrap css: {e}")
 
-def create_bootstrap_js_file(project_name, barre):
+def create_bootstrap_js_file(project_name, barre, custom_path=None):
     barre.set_description("Insertion de bootstrap js ...")
     try:
-        js_dest_path = os.path.join(get_desktop_path(), project_name, "assets", "js")
+        js_dest_path = os.path.join(get_desktop_path(custom_path), project_name, "assets", "js")
         shutil.copy("assets/js/bootstrap.min.js", js_dest_path)
     except Exception as e:
         print(f"Erreur lors de la copie de bootstrap js: {e}")
 
-def copy_media_images(project_name, barre):
+def copy_media_images(project_name, barre, custom_path=None):
     barre.set_description("Insertion des medias ...")
     try:
-        medias_dest_path = os.path.join(get_desktop_path(), project_name, "medias")
+        medias_dest_path = os.path.join(get_desktop_path(custom_path), project_name, "medias")
         shutil.copy("medias/ken-net.png", medias_dest_path)
     except Exception as e:
         print(f"Erreur lors de la copie des medias: {e}")
 
-def copy_readme_file(project_name, barre):
+def copy_readme_file(project_name, barre, custom_path=None):
     barre.set_description("Insertion du readme ...")
     try:
-        project_path = os.path.join(get_desktop_path(), project_name)
+        project_path = os.path.join(get_desktop_path(custom_path), project_name)
         shutil.copy("README.md", project_path)
     except Exception as e:
         print(f"Erreur lors de la copie du readme: {e}")
 
-def git_init(project_name):
+def git_init(project_name, custom_path=None):
     try:
-        project_path = os.path.join(get_desktop_path(), project_name)
+        project_path = os.path.join(get_desktop_path(custom_path), project_name)
         os.chdir(project_path)
         os.system("git init")
     except Exception as e:
         print(f"Erreur lors de l'initialisation Git: {e}")
 
-def start_server(project_name):
+def start_server(project_name, custom_path=None):
     try:
-        project_path = os.path.join(get_desktop_path(), project_name)
+        project_path = os.path.join(get_desktop_path(custom_path), project_name)
         os.chdir(project_path)
         handler = http.server.SimpleHTTPRequestHandler
         

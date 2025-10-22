@@ -11,18 +11,21 @@ else:
 
 #Creation de la liste des options diponibles et verification des args passes
 
-options = ["--git", "--serve"]
+options = ["--git", "--serve", "--path"]
 
-if(len(args) > 3):
-    if(args[2] in options and args[3] in options):
-        pass
-    else:
-        print(colorama.Fore.RED + " \n Veuillez entrer des options valides \n" + colorama.Style.RESET_ALL)
-        exit()
-elif(len(args) > 2):
-    if(args[2] in options):
-        pass
-    else:
+# Variable pour le chemin personnalisé
+custom_path = None
+
+# Detection de l'option --path
+for i in range(len(args)):
+    if args[i] == "--path" and i + 1 < len(args):
+        custom_path = args[i + 1]
+        break
+
+# Validation simple des options
+valid_options = ["--git", "--serve", "--path"]
+for i in range(2, len(args)):
+    if args[i] not in valid_options and not (i > 0 and args[i-1] == "--path"):
         print(colorama.Fore.RED + "\n Veuillez entrer des options valides \n" + colorama.Style.RESET_ALL)
         exit()
 
@@ -57,27 +60,27 @@ barre = tqdm.tqdm(traitements)
 # Traiments des differentes operations
 for trait in traitements:
     time.sleep(0.5)
-    trait(project_name, barre)
+    trait(project_name, barre, custom_path)
     barre.update()
 
 if(len(args) > 2):
     # Verification et initialisation du depot git
     if(args[2] == "--git"):
-        git_init(project_name)
+        git_init(project_name, custom_path)
 
     # Verification et demarrage du server
     if(args[2] == "--serve"):
         print(colorama.Fore.LIGHTGREEN_EX + " \n Le serveur de developpement est lance sur l'adresse (http://127.0.0.1:8000) \n" + colorama.Style.RESET_ALL)
-        start_server(project_name)
+        start_server(project_name, custom_path)
 if(len(args) > 3):
         # Verification et initialisation du depot git
     if(args[3] == "--git"):
-        git_init(project_name)
+        git_init(project_name, custom_path)
 
     # Verification et demarrage du server
     if(args[3] == "--serve"):
         print(colorama.Fore.LIGHTGREEN_EX + "Le serveur de developpement est lance sur l'adresse http://127.0.0.1:8000 " + colorama.Style.RESET_ALL)
-        start_server(project_name)
+        start_server(project_name, custom_path)
 
 
 exit()

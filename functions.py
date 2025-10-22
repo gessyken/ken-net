@@ -128,7 +128,18 @@ def start_server(project_name):
         project_path = os.path.join(get_desktop_path(), project_name)
         os.chdir(project_path)
         handler = http.server.SimpleHTTPRequestHandler
-        with socketserver.TCPServer(("", 8000), handler) as httpd:
-            httpd.serve_forever()
+        
+        # Essayer plusieurs ports si 8000 est occupé
+        ports = [8000, 8001, 8002, 8003, 8004]
+        for port in ports:
+            try:
+                with socketserver.TCPServer(("", port), handler) as httpd:
+                    print(f"Serveur demarre sur le port {port}")
+                    httpd.serve_forever()
+                break
+            except OSError:
+                if port == ports[-1]:  # Dernier port essayé
+                    raise
+                continue
     except Exception as e:
         print(f"Erreur lors du demarrage du serveur: {e}")
